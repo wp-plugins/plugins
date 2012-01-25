@@ -4,7 +4,7 @@ Plugin Name: Plugins
 Plugin Script: plugins.php
 Plugin URI: http://marto.lazarov.org/plugins/plugins
 Description: List wordpress contributor plugins and their stats
-Version: 2.0.1
+Version: 2.0.2
 Author: mlazarov
 Author URI: http://marto.lazarov.org/
 */
@@ -56,7 +56,7 @@ if (class_exists('WP_Widget')) {
 			$plugins = (array)$instance['plugins'];
 			echo $args['before_widget'];
 			if ( !empty( $title ) ) { echo $args['before_title'] . $title . $args['after_title']; };
-			echo '<table border="0">';
+			echo '<table border="0" style="margin:15px auto;">';
 			foreach($plugins as $plugin_slug=>$plugin){
 				echo '<tr><td style="text-align:right">'.$plugin['downloads'].'&nbsp;</td><td style="padding-left:15px;"><a href="http://wordpress.org/extend/plugins/'.$plugin_slug.'/" target="_blank">'.$plugin['name']."</a></td></tr>\n";
 			}
@@ -65,10 +65,7 @@ if (class_exists('WP_Widget')) {
 			echo $args['after_widget'];
 		}
 		function getFreshData(){
-			if(function_exists('get_plugin_data'))
-				$plugin = get_plugin_data( __FILE__ );
-			else
-				$plugin['Version'] = 'unk';
+
 			foreach($this->settings as $id=>$settings){
 				if(!$settings['author']){
 					continue;
@@ -84,8 +81,8 @@ if (class_exists('WP_Widget')) {
 						$this->settings[$id]['plugins'][$m[1]]['downloads'] = $m[3];
 				}
 				usort($this->settings[$id]['plugins'],'dlsort');
+				$this->settings['updated'] = time();
 			}
-			$this->settings['updated'] = time();
 			$this->save_settings($this->settings);
 		}
 	}
