@@ -2,7 +2,7 @@
 Tags: plugins
 Requires at least: 2.4
 Tested up to: 3.3.0
-Stable tag: 1.0.1
+Stable tag: 2.0.1
 Donate link: http://marto.lazarov.org/plugins/plugins
 Contributors: mlazarov
 
@@ -26,7 +26,7 @@ so I can update it more easily.
 
 == Changelog ==
 
-= 1.0.0 =
+= 2.0.1 =
 * First release
 
 == Screenshots ==
