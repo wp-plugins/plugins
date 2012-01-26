@@ -2,7 +2,7 @@
 Tags: plugins
 Requires at least: 2.4
 Tested up to: 3.3.0
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 Donate link: http://marto.lazarov.org/plugins/plugins
 Contributors: mlazarov
 
@@ -25,6 +25,9 @@ I'm collection tips and FAQ on [this page](http://marto.lazarov.org/plugins/plug
 so I can update it more easily.
 
 == Changelog ==
+
+= 2.0.4 =
+Update bugfix
 
 = 2.0.3 =
 * readme.txt description update & hourly update bugfixes

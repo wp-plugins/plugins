@@ -4,7 +4,7 @@ Plugin Name: Plugins
 Plugin Script: plugins.php
 Plugin URI: http://marto.lazarov.org/plugins/plugins
 Description: List wordpress contributor plugins and their stats
-Version: 2.0.3
+Version: 2.0.4
 Author: mlazarov
 Author URI: http://marto.lazarov.org/
 */
@@ -18,21 +18,19 @@ if (class_exists('WP_Widget')) {
 							'description' => 'List wordpress contributor plugins and their stats' );
 			$this->WP_Widget('plugins', 'Plugins', $widget_ops);
 			$this->settings = $this->get_settings();
-			//var_dump($this);exit;
-			if(!$this->settings['updated'] || $this->settings['updated']<time()-3600) $this->getFreshData();
+			$this->getFreshData();
 		}
 
 		function update($new_instance, $old_instance) {
 			$instance = $old_instance;
 			$instance['title'] = strip_tags($new_instance['title']);
 			$instance['author'] = strip_tags($new_instance['author']);
-			$this->settings['author'] = strip_tags($new_instance['author']);
-			$this->save_settings($this->settings);
+			$instance['updated'] = 0;
 			return $instance;
 		}
 		function form($instance) {
 			$plugin = get_plugin_data( __FILE__ );
-			$instance = wp_parse_args( (array) $instance, array( 'title' => 'Plugins', 'author' => 'mlazarov', 'width' => '300', 'height' => '400' ) );
+			$instance = wp_parse_args( (array) $instance, array( 'title' => 'Plugins', 'author' => 'mlazarov', 'updated' => 0, 'width' => '300', 'height' => '400' ) );
 			$title = strip_tags($instance['title']);
 			$author = strip_tags($instance['author']);
 			?>
@@ -48,7 +46,6 @@ if (class_exists('WP_Widget')) {
 		}
 
 		function widget($args, $instance) {
-
 			echo "\n<!--\nSTART `Plugins` Widget\nhttp://wordpress.org/extend/plugins/plugins/ \n//-->\n";
 
 
@@ -61,7 +58,7 @@ if (class_exists('WP_Widget')) {
 				echo '<tr><td style="text-align:right">'.$plugin['downloads'].'&nbsp;</td><td style="padding-left:15px;"><a href="http://wordpress.org/extend/plugins/'.$plugin_slug.'/" target="_blank">'.$plugin['name']."</a></td></tr>\n";
 			}
 			echo '</table>';
-			echo '<div style="text-align:right;font-size:10px;">Last updated: '.date('d.m.Y H:i',$this->settings['updated'])."</div>\n";
+			echo '<div style="text-align:right;font-size:10px;padding: 5px;">Last updated: '.date('d.m.Y H:i',$instance['updated'])."</div>\n";
 
 			echo $args['after_widget'];
 		}
@@ -70,6 +67,7 @@ if (class_exists('WP_Widget')) {
 				if(!$settings['author']){
 					continue;
 				}
+				if($settings['updates']> time()-3600) continue;
 				$url = 'http://profiles.wordpress.org/users/'.$settings['author'].'/profile/public/';
 				$html = file_get_contents($url);
 
@@ -80,7 +78,7 @@ if (class_exists('WP_Widget')) {
 						$this->settings[$id]['plugins'][$m[1]]['downloads'] = $m[3];
 				}
 				uasort($this->settings[$id]['plugins'],'dlsort');
-				$this->settings['updated'] = time();
+				$this->settings[$id]['updated'] = time();
 			}
 			$this->save_settings($this->settings);
 		}
