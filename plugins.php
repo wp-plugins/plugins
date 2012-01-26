@@ -67,7 +67,7 @@ if (class_exists('WP_Widget')) {
 				if(!$settings['author']){
 					continue;
 				}
-				if($settings['updates']> time()-3600) continue;
+				if($settings['updated'] > (time()-3600)) continue;
 				$url = 'http://profiles.wordpress.org/users/'.$settings['author'].'/profile/public/';
 				$html = file_get_contents($url);
 
