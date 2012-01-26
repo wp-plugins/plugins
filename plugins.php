@@ -61,7 +61,7 @@ if (class_exists('WP_Widget')) {
 				echo '<tr><td style="text-align:right">'.$plugin['downloads'].'&nbsp;</td><td style="padding-left:15px;"><a href="http://wordpress.org/extend/plugins/'.$plugin_slug.'/" target="_blank">'.$plugin['name']."</a></td></tr>\n";
 			}
 			echo '</table>';
-			echo "Last updated: ".date('d.m.Y H:I',$this-settings['updated'])
+			echo '<div style="text-align:right;font-size:10px;">Last updated: '.date('d.m.Y H:i',$this->settings['updated'])."</div>\n";
 
 			echo $args['after_widget'];
 		}
