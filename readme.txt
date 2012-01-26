@@ -2,7 +2,7 @@
 Tags: plugins
 Requires at least: 2.4
 Tested up to: 3.3.0
-Stable tag: 2.0.1
+Stable tag: 2.0.3
 Donate link: http://marto.lazarov.org/plugins/plugins
 Contributors: mlazarov
 
@@ -10,7 +10,7 @@ List wordpress contributor plugins and their stats
 
 == Description ==
 
-With this tiny plugin you can show plugins stats from wordpress.org
+With this tiny plugin you can show plugins stats for any wordpress contributor from wordpress.org
 
 == Frequently Asked Questions ==
 
@@ -25,6 +25,12 @@ I'm collection tips and FAQ on [this page](http://marto.lazarov.org/plugins/plug
 so I can update it more easily.
 
 == Changelog ==
+
+= 2.0.3 =
+* readme.txt description update & hourly update bugfixes
+
+= 2.0.2 =
+* Adding screenshots
 
 = 2.0.1 =
 * First release

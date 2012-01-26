@@ -4,7 +4,7 @@ Plugin Name: Plugins
 Plugin Script: plugins.php
 Plugin URI: http://marto.lazarov.org/plugins/plugins
 Description: List wordpress contributor plugins and their stats
-Version: 2.0.2
+Version: 2.0.3
 Author: mlazarov
 Author URI: http://marto.lazarov.org/
 */
@@ -61,11 +61,11 @@ if (class_exists('WP_Widget')) {
 				echo '<tr><td style="text-align:right">'.$plugin['downloads'].'&nbsp;</td><td style="padding-left:15px;"><a href="http://wordpress.org/extend/plugins/'.$plugin_slug.'/" target="_blank">'.$plugin['name']."</a></td></tr>\n";
 			}
 			echo '</table>';
+			echo "Last updated: ".date('d.m.Y H:I',$this-settings['updated'])
 
 			echo $args['after_widget'];
 		}
 		function getFreshData(){
-
 			foreach($this->settings as $id=>$settings){
 				if(!$settings['author']){
 					continue;
@@ -74,13 +74,12 @@ if (class_exists('WP_Widget')) {
 				$html = file_get_contents($url);
 
 				preg_match_all('#<h3><a href="http://wordpress.org/extend/plugins/([^/]+)/">([^<]+)</a></h3>\s+<p class="downloads">([0-9,]+) downloads</p>#ismU',$html,$matches,PREG_SET_ORDER);
-				$this->settings[$id] = array();
 				$this->settings[$id]['plugins'] = array();
 				foreach($matches as $k=>$m){
 						$this->settings[$id]['plugins'][$m[1]]['name'] = $m[2];
 						$this->settings[$id]['plugins'][$m[1]]['downloads'] = $m[3];
 				}
-				usort($this->settings[$id]['plugins'],'dlsort');
+				uasort($this->settings[$id]['plugins'],'dlsort');
 				$this->settings['updated'] = time();
 			}
 			$this->save_settings($this->settings);
