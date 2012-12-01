@@ -2,7 +2,7 @@
 Tags: plugins
 Requires at least: 2.4
 Tested up to: 3.4.2
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=D96ZZLGAV8X8J
 Contributors: mlazarov
 
@@ -25,6 +25,9 @@ I'm collection tips and FAQ on [this page](http://marto.lazarov.org/plugins/plug
 so I can update it more easily.
 
 == Changelog ==
+
+= 2.1.1 =
+* Fixed rel="nofollow" option position & bug in form
 
 = 2.1.0 =
 * Added rel="nofollow" option

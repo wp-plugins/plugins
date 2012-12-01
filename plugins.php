@@ -4,7 +4,7 @@ Plugin Name: Plugins
 Plugin Script: plugins.php
 Plugin URI: http://marto.lazarov.org/plugins/plugins
 Description: List wordpress contributor plugins and their stats
-Version: 2.1.0
+Version: 2.1.1
 Author: mlazarov
 Author URI: http://marto.lazarov.org/
 */
@@ -25,6 +25,7 @@ if (class_exists('WP_Widget')) {
 			$instance = $old_instance;
 			$instance['title'] = strip_tags($new_instance['title']);
 			$instance['author'] = strip_tags($new_instance['author']);
+			$instance['nofollow'] = strip_tags($new_instance['nofollow']);
 			$instance['updated'] = 0;
 			return $instance;
 		}
@@ -49,8 +50,8 @@ if (class_exists('WP_Widget')) {
 			</p>
 			<p>
 				<label for="<?php echo $this->get_field_id('nofollow'); ?>">
-				Add rel="nofollow":
-				<input class="widefat" id="<?php echo $this->get_field_id('nofollow'); ?>" name="<?php echo $this->get_field_name('nofollow'); ?>" type="checkbox" <?php if($nofollow){echo 'checked="checked"';};?> />
+				<input id="<?php echo $this->get_field_id('nofollow'); ?>" name="<?php echo $this->get_field_name('nofollow'); ?>" type="checkbox" <?php if($nofollow){echo 'checked="checked"';};?> value="1"/>
+				 rel="nofollow" for wordpress.org links
 				</label>
 			</p>
 			<?php
