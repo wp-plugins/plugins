@@ -3,9 +3,8 @@ Tags: plugins
 Requires at least: 2.4
 Tested up to: 3.4.2
 Stable tag: 2.1.0
-Donate link: http://marto.lazarov.org/plugins/plugins
-Contributors: mlazarov
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=D96ZZLGAV8X8J
+Contributors: mlazarov
 
 List wordpress contributor plugins and their stats
 
