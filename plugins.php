@@ -4,7 +4,7 @@ Plugin Name: Plugins
 Plugin Script: plugins.php
 Plugin URI: http://marto.lazarov.org/plugins/plugins
 Description: List wordpress contributor plugins and their stats
-Version: 2.0.4
+Version: 2.1.0
 Author: mlazarov
 Author URI: http://marto.lazarov.org/
 */
@@ -33,15 +33,26 @@ if (class_exists('WP_Widget')) {
 			$instance = wp_parse_args( (array) $instance, array( 'title' => 'Plugins', 'author' => 'mlazarov', 'updated' => 0, 'width' => '300', 'height' => '400' ) );
 			$title = strip_tags($instance['title']);
 			$author = strip_tags($instance['author']);
+			$nofollow = (int)$instance['nofollow'];
 			?>
 			<p>
 				<label for="<?php echo $this->get_field_id('title'); ?>">
-				Title: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" />
+				Title:
+				<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" />
 				</label>
 			</p>
 			<p>
 				<label for="<?php echo $this->get_field_id('author'); ?>">
-				Author username: <input class="widefat" id="<?php echo $this->get_field_id('author'); ?>" name="<?php echo $this->get_field_name('author'); ?>" type="text" value="<?php echo attribute_escape($author); ?>" /></label></p>
+				Author username:
+				<input class="widefat" id="<?php echo $this->get_field_id('author'); ?>" name="<?php echo $this->get_field_name('author'); ?>" type="text" value="<?php echo attribute_escape($author); ?>" />
+				</label>
+			</p>
+			<p>
+				<label for="<?php echo $this->get_field_id('nofollow'); ?>">
+				Add rel="nofollow":
+				<input class="widefat" id="<?php echo $this->get_field_id('nofollow'); ?>" name="<?php echo $this->get_field_name('nofollow'); ?>" type="checkbox" <?php if($nofollow){echo 'checked="checked"';};?> />
+				</label>
+			</p>
 			<?php
 		}
 
@@ -55,10 +66,12 @@ if (class_exists('WP_Widget')) {
 			if ( !empty( $title ) ) { echo $args['before_title'] . $title . $args['after_title']; };
 			echo '<table border="0" style="margin:15px auto;">';
 			foreach($plugins as $plugin_slug=>$plugin){
-				echo '<tr><td style="text-align:right">'.$plugin['downloads'].'&nbsp;</td><td style="padding-left:15px;"><a href="http://wordpress.org/extend/plugins/'.$plugin_slug.'/" target="_blank">'.$plugin['name']."</a></td></tr>\n";
+				echo '<tr><td style="text-align:right">'.$plugin['downloads'].'&nbsp;</td>' .
+						'<td style="padding-left:15px;"><a href="http://wordpress.org/extend/plugins/'.$plugin_slug.'/" target="_blank" '.($instance['nofollow']?'rel="nofollow"':'').'>'.$plugin['name']."</a></td>" .
+						"</tr>\n";
 			}
 			echo '</table>';
-			echo '<div style="text-align:right;font-size:10px;padding: 5px;">Last updated: '.date('d.m.Y H:i',$instance['updated'])."</div>\n";
+			echo '<div style="text-align:right;font-size:10px;padding: 5px 15px;">Last updated: '.date('d.m.Y H:i',$instance['updated'])."</div>\n";
 
 			echo $args['after_widget'];
 		}
@@ -67,7 +80,7 @@ if (class_exists('WP_Widget')) {
 				if(!$settings['author']){
 					continue;
 				}
-				if($settings['updated'] > (time()-3600)) continue;
+				if($settings['updated'] > (time()-600)) continue;
 				$url = 'http://profiles.wordpress.org/users/'.$settings['author'].'/profile/public/';
 				$html = file_get_contents($url);
 
