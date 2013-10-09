@@ -4,7 +4,7 @@ Plugin Name: Plugins
 Plugin Script: plugins.php
 Plugin URI: http://marto.lazarov.org/plugins/plugins
 Description: List wordpress contributor plugins and their stats
-Version: 2.1.1
+Version: 2.1.2
 Author: mlazarov
 Author URI: http://marto.lazarov.org/
 */
@@ -58,7 +58,7 @@ if (class_exists('WP_Widget')) {
 		}
 
 		function widget($args, $instance) {
-			echo "\n<!--\nSTART `Plugins` Widget\nhttp://wordpress.org/extend/plugins/plugins/ \n//-->\n";
+			echo "\n<!--\nSTART `Plugins` Widget\nhttp://wordpress.org/plugins/plugins/ \n//-->\n";
 
 
 			$title = empty($instance['title']) ? '&nbsp;' : apply_filters('widget_title', $instance['title']);
@@ -68,7 +68,7 @@ if (class_exists('WP_Widget')) {
 			echo '<table border="0" style="margin:15px auto;">';
 			foreach($plugins as $plugin_slug=>$plugin){
 				echo '<tr><td style="text-align:right">'.$plugin['downloads'].'&nbsp;</td>' .
-						'<td style="padding-left:15px;"><a href="http://wordpress.org/extend/plugins/'.$plugin_slug.'/" target="_blank" '.($instance['nofollow']?'rel="nofollow"':'').'>'.$plugin['name']."</a></td>" .
+						'<td style="padding-left:15px;"><a href="http://wordpress.org/plugins/'.$plugin_slug.'/" target="_blank" '.($instance['nofollow']?'rel="nofollow"':'').'>'.$plugin['name']."</a></td>" .
 						"</tr>\n";
 			}
 			echo '</table>';
@@ -85,7 +85,7 @@ if (class_exists('WP_Widget')) {
 				$url = 'http://profiles.wordpress.org/users/'.$settings['author'].'/profile/public/';
 				$html = file_get_contents($url);
 
-				preg_match_all('#<h3><a href="http://wordpress.org/extend/plugins/([^/]+)/">([^<]+)</a></h3>\s+<p class="downloads">([0-9,]+) downloads</p>#ismU',$html,$matches,PREG_SET_ORDER);
+				preg_match_all('#<h3><a href="http://wordpress.org/plugins/([^/]+)/">([^<]+)</a></h3>\s+<p class="downloads">([0-9,]+) downloads</p>#ismU',$html,$matches,PREG_SET_ORDER);
 				$this->settings[$id]['plugins'] = array();
 				foreach($matches as $k=>$m){
 						$this->settings[$id]['plugins'][$m[1]]['name'] = $m[2];
