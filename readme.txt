@@ -2,8 +2,7 @@
 Tags: plugins
 Requires at least: 2.4
 Tested up to: 3.6.1
-Stable tag: 2.1.2
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=D96ZZLGAV8X8J
+Stable tag: 2.1.333onate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=D96ZZLGAV8X8J
 Contributors: mlazarov
 
 List wordpress contributor plugins and their stats
@@ -25,6 +24,9 @@ I'm collection tips and FAQ on [this page](http://marto.lazarov.org/plugins/plug
 so I can update it more easily.
 
 == Changelog ==
+
+= 2.1.3 =
+* Fixin wordpress user profile url and html parsing
 
 = 2.1.2 =
 * Fixed Wordpress website html parsing for plugins list&stats

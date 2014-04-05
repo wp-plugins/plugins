@@ -4,7 +4,7 @@ Plugin Name: Plugins
 Plugin Script: plugins.php
 Plugin URI: http://marto.lazarov.org/plugins/plugins
 Description: List wordpress contributor plugins and their stats
-Version: 2.1.2
+Version: 2.1.3
 Author: mlazarov
 Author URI: http://marto.lazarov.org/
 */
@@ -82,10 +82,11 @@ if (class_exists('WP_Widget')) {
 					continue;
 				}
 				if($settings['updated'] > (time()-600)) continue;
-				$url = 'http://profiles.wordpress.org/users/'.$settings['author'].'/profile/public/';
+				$url = 'http://profiles.wordpress.org/'.$settings['author'].'/';
 				$html = file_get_contents($url);
+				
+				preg_match_all('#<h3>\s+<a href="http://wordpress.org/plugins/([^/]+)/">([^<]+)</a>\s+</h3>\s+<p class="downloads">([0-9,]+) downloads</p>#ismU',$html,$matches,PREG_SET_ORDER);
 
-				preg_match_all('#<h3><a href="http://wordpress.org/plugins/([^/]+)/">([^<]+)</a></h3>\s+<p class="downloads">([0-9,]+) downloads</p>#ismU',$html,$matches,PREG_SET_ORDER);
 				$this->settings[$id]['plugins'] = array();
 				foreach($matches as $k=>$m){
 						$this->settings[$id]['plugins'][$m[1]]['name'] = $m[2];
