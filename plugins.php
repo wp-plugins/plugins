@@ -4,7 +4,7 @@ Plugin Name: Plugins
 Plugin Script: plugins.php
 Plugin URI: http://marto.lazarov.org/plugins/plugins
 Description: List wordpress contributor plugins and their stats
-Version: 2.1.3
+Version: 2.1.4
 Author: mlazarov
 Author URI: http://marto.lazarov.org/
 */
