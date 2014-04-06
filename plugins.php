@@ -85,7 +85,7 @@ if (class_exists('WP_Widget')) {
 				$url = 'http://profiles.wordpress.org/'.$settings['author'].'/';
 				$html = file_get_contents($url);
 				
-				preg_match_all('#<h3>\s+<a href="http://wordpress.org/plugins/([^/]+)/">([^<]+)</a>\s+</h3>\s+<p class="downloads">([0-9,]+) downloads</p>#ismU',$html,$matches,PREG_SET_ORDER);
+				preg_match_all('#<h3>\s+<a href="//wordpress.org/plugins/([^/]+)/">([^<]+)</a>\s+</h3>\s+<p class="downloads">([0-9,]+) downloads</p>#ismU',$html,$matches,PREG_SET_ORDER);
 
 				$this->settings[$id]['plugins'] = array();
 				foreach($matches as $k=>$m){
