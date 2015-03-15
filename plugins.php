@@ -4,7 +4,7 @@ Plugin Name: Plugins
 Plugin Script: plugins.php
 Plugin URI: http://marto.lazarov.org/plugins/plugins
 Description: List wordpress contributor plugins and their stats
-Version: 2.1.4
+Version: 3.0.0
 Author: mlazarov
 Author URI: http://marto.lazarov.org/
 */
@@ -82,20 +82,55 @@ if (class_exists('WP_Widget')) {
 					continue;
 				}
 				if($settings['updated'] > (time()-600)) continue;
+
 				$url = 'http://profiles.wordpress.org/'.$settings['author'].'/';
 				$html = file_get_contents($url);
-				
-				preg_match_all('#<h3>\s+<a href="//wordpress.org/plugins/([^/]+)/">([^<]+)</a>\s+</h3>\s+<p class="downloads">([0-9,]+) downloads</p>#ismU',$html,$matches,PREG_SET_ORDER);
+			
+				if(class_exists('DOMDocument') && class_exists('DOMXPath')){
+					$this->parseUsingDom($html,$id);
+				}else{
+					$this->parseUsingPreg($html,$id);
+				}				
 
-				$this->settings[$id]['plugins'] = array();
-				foreach($matches as $k=>$m){
-						$this->settings[$id]['plugins'][$m[1]]['name'] = $m[2];
-						$this->settings[$id]['plugins'][$m[1]]['downloads'] = $m[3];
-				}
 				uasort($this->settings[$id]['plugins'],'dlsort');
 				$this->settings[$id]['updated'] = time();
 			}
 			$this->save_settings($this->settings);
+		}
+		function parseUsingPreg($html,$id){
+			preg_match_all('#<h3>\s+<a href="//wordpress.org/plugins/([^/]+)/">([^<]+)</a>\s+</h3>\s+<p class="downloads">([0-9,]+) downloads</p>#ismU',
+					$html,$matches,PREG_SET_ORDER);
+
+			$this->settings[$id]['plugins'] = array();
+			foreach($matches as $k=>$m){
+				$this->settings[$id]['plugins'][$m[1]]['name'] = $m[2];
+				$this->settings[$id]['plugins'][$m[1]]['downloads'] = $m[3];
+			}
+		
+
+		}
+		function parseUsingDom($html,$id){
+			$dom = new DOMDocument;
+			$dom->loadHTML($html);
+			$xpath = new DOMXPath($dom);
+
+			$nlist = $xpath->query("//div[@class='plugin-info-container']");
+			foreach($nlist as $im=>$div){
+					if($div->hasChildNodes()){
+						$nodes = $div->childNodes;
+						//$html = $div->c14n();
+
+						$href = $nodes->item(1)->childNodes->item(1)->getAttribute('href');
+						preg_match('#wordpress.org/plugins/([^/]+)#',$href,$m);	
+						$slug = $m[1];
+						$name = trim($nodes->item(1)->textContent);
+						$dls = trim($nodes->item(3)->textContent);
+						
+						$this->settings[$id]['plugins'][$slug]['name'] = $name;
+						$this->settings[$id]['plugins'][$slug]['downloads'] = $dls;
+
+					}
+			}
 		}
 	}
 
