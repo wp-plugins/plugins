@@ -4,7 +4,7 @@ Plugin Name: Plugins
 Plugin Script: plugins.php
 Plugin URI: http://marto.lazarov.org/plugins/plugins
 Description: List wordpress contributor plugins and their stats
-Version: 3.0.0
+Version: 3.0.1
 Author: mlazarov
 Author URI: http://marto.lazarov.org/
 */
@@ -111,7 +111,7 @@ if (class_exists('WP_Widget')) {
 		}
 		function parseUsingDom($html,$id){
 			$dom = new DOMDocument;
-			$dom->loadHTML($html);
+			@$dom->loadHTML($html);
 			$xpath = new DOMXPath($dom);
 
 			$nlist = $xpath->query("//div[@class='plugin-info-container']");
@@ -124,7 +124,9 @@ if (class_exists('WP_Widget')) {
 						preg_match('#wordpress.org/plugins/([^/]+)#',$href,$m);	
 						$slug = $m[1];
 						$name = trim($nodes->item(1)->textContent);
-						$dls = trim($nodes->item(3)->textContent);
+						$dls_text = trim($nodes->item(3)->textContent);
+						preg_match('#([0-9,]+) downloads#',$dls_text,$m);
+						$dls = $m[1];
 						
 						$this->settings[$id]['plugins'][$slug]['name'] = $name;
 						$this->settings[$id]['plugins'][$slug]['downloads'] = $dls;

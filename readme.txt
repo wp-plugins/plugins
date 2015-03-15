@@ -25,7 +25,7 @@ I'm collection tips and FAQ on [this page](http://marto.lazarov.org/plugins/plug
 so I can update it more easily.
 
 == Changelog ==
-= 3.0.0 =
+= 3.0.1 =
 * Adding new html parser method (using dom if available)
 
 = 2.1.4 =
